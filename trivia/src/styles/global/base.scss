@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@keyframes background-move {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(300px);
+  }
+}
+
+.container {
+  position: fixed;
+  width: 100vw;
+  height: calc(100vh + 600px);
+  top: -300px;
+  animation: background-move 10s infinite;
+
+
+}
+
+.content {
+  position: absolute;
+  z-index: 1;
+}
