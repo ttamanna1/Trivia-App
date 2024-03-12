@@ -23,6 +23,10 @@ body {
 }
 
 .container {
+  background-image: radial-gradient(#e4e4f5 20%, transparent 20%), radial-gradient(#d5d5f5 20%, transparent 20%);
+  background-color: #F2F2FC;
+  background-position: 0 0, 50px 50px;
+  background-size: 100px 100px;
   position: fixed;
   width: 100vw;
   height: calc(100vh + 600px);

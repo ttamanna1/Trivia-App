@@ -1,11 +1,11 @@
-import background from './assets/bg.png'
+
 
 function App() {
 
 
   return (
     <>
-      <div className="container" style={ { backgroundImage: `url(${background})` } }></div>
+      <div className="container"></div>
       <div className='content'>
         <div className="wrapper">
           <div className="heading"> 
