@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Passion One', sans-serif;
 }
 
 html, body {
@@ -43,6 +44,26 @@ body {
   
   button {
     position: absolute;
+    background: transparent;
+    text-align: center;
+    width: 0;
+    height: 0;
+    border-left: transparent;
+    border-top: 50px solid transparent;
+    border-right: 75px solid pink;
+    border-bottom: 50px solid transparent;
+
+    span {
+      position: absolute;
+      top: 8px;
+      left: 21px;
+      transform: translateY(-50%);
+    }
+  }
+
+  button:hover {
+    border-right-color: orange;
+    color: rgb(165, 247, 0);
   }
 
   .wrapper {
@@ -174,4 +195,12 @@ body {
     transform: rotateY(-60deg);
   }
   
+}
+
+.triangle-left {
+  width: 0;
+  height: 0;
+  border-top: 25px solid transparent;
+  border-right: 50px solid #333;
+  border-bottom: 25px solid transparent;
 }

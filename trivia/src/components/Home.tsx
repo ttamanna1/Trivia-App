@@ -22,7 +22,7 @@ function Home() {
       }
     }
 
-    const intervalId = setInterval(moveButton, 3000)
+    const intervalId = setInterval(moveButton, 1000)
 
     return () => clearInterval(intervalId)
   }, [])
@@ -44,7 +44,9 @@ function Home() {
             <span className="char5" data-heading="!">!</span>    
           </div>
         </div>
-        <button id="movingButton" onClick={toQuizPage}>Enter! 😜</button>
+        <button id="movingButton" onClick={toQuizPage}>
+          <span>ENTER! 😜</span>
+        </button>
       </div>
     </>
   )
