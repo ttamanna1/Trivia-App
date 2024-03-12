@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+html, body {
+	height: 100%;
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 @keyframes background-move {
   0% {
     transform: translateY(0);
@@ -19,11 +28,142 @@
   height: calc(100vh + 600px);
   top: -300px;
   animation: background-move 10s infinite;
-
-
 }
 
 .content {
   position: absolute;
   z-index: 1;
+  width: 100%;
+  height: 100%;
+  
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Passion One', sans-serif;
+    margin: 0 auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .wrapper .heading {
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    bottom: 50%;
+    margin: 0;
+    position: absolute;
+    font-size: 4rem;
+    font-weight: 700;
+    text-shadow: 1px 4px 6px #e6e2df;
+    white-space: nowrap;
+  }
+  .wrapper span {
+    position: relative;
+    -webkit-transform-style: preserve-3d;
+    -ms-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-perspective: 3000px;
+    -ms-perspective: 3000px;
+    perspective: 3000px;
+    z-index: 1;
+  }
+  
+  .wrapper span.char1 {
+    color: #540D6E;
+  }
+  .wrapper span.char1:hover {
+    color: #4D0C64;
+  }
+  .wrapper span.char1:hover::after {
+    background: -webkit-linear-gradient(left, #4D0C64 0%, #733988 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .wrapper span.char2 {
+    color: #EE4266;
+  }
+  .wrapper span.char2:hover {
+    color: #D93C5D;
+  }
+  .wrapper span.char2:hover::after {
+    background: -webkit-linear-gradient(left, #C33754 0%, #F16481 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .wrapper span.char3 {
+    color: #FFD650;
+  }
+  .wrapper span.char3:hover {
+    color: #FFD23F;
+  }
+  .wrapper span.char3:hover::after {
+    background: -webkit-linear-gradient(left, #E8BF3A 0%, #FFDE73 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .wrapper span.char4 {
+    color: #3BCEAC;
+  }
+  .wrapper span.char4:hover {
+    color: #31A98D;
+  }
+  .wrapper span.char4:hover::after {
+    background: -webkit-linear-gradient(left, #31A98D 0%, #5ED6BB 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .wrapper span.char5 {
+    color: #0EAD69;
+  }
+  .wrapper span.char5:hover {
+    color: #0C8E56;
+  }
+  .wrapper span.char5:hover::after {
+    background: -webkit-linear-gradient(left, #0C8E56 0%, #39BB84 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .wrapper span::before {
+    -webkit-transform: scale(1.01, 1) skew(0deg, 1deg);
+    -ms-transform: scale(1.01, 1) skew(0deg, 1deg);
+    transform: scale(1.01, 1) skew(0deg, 1deg);
+    color: transparent;
+    text-shadow: 0px 0px 0px rgba(0,0,0,0.15);
+  }
+  .wrapper span::after {
+    -webkit-transition: all 250ms ease;
+    transition: all 250ms ease;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    text-shadow: 2px 0px 1px hsla(0, 0%, 0%, 0.05);
+    -webkit-transform: rotateY(-15deg);
+    -ms-transform: rotateY(-15deg);
+    transform: rotateY(-15deg);
+  }
+  .wrapper span::before, .wrapper span::after {
+    content: attr(data-heading);
+    position: absolute;
+    left: 0;
+    -webkit-transform-origin: 0 50%;
+    -ms-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+  }
+  .wrapper span:hover::before {
+    -webkit-transform: scale(0.85, 1) skew(0deg, 10deg);
+    -ms-transform: scale(0.85, 1) skew(0deg, 10deg);
+    transform: scale(0.85, 1) skew(0deg, 10deg);
+  }
+  .wrapper span:hover::after {
+    -webkit-transform: rotateY(-60deg);
+    -ms-transform: rotateY(-60deg);
+    transform: rotateY(-60deg);
+  }
+  
 }
