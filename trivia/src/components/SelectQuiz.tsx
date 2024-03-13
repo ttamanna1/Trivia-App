@@ -2,7 +2,11 @@
 
 const SelectQuiz = () => {
   return (
-    <div>SelectQuiz</div>
+    <>
+      <div className="background">
+        <h1>Select Quiz</h1>
+      </div>
+    </>
   )
 }
 
