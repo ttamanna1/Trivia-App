@@ -28,4 +28,28 @@
   background-size: calc(4*var(--s)) calc(6*var(--r));
   width: 100vw;
   height: 100vh;
+
+  h1{
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .form{
+    .selections{
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+
+      .select-container{
+        display: inline-block;
+        margin: 2rem;
+      }
+    }
+
+    .start-button{
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+  }
 }
