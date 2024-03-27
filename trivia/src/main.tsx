@@ -9,6 +9,7 @@ import './styles/main.scss'
 import App from './App.tsx'
 import Home from './components/Home.tsx'
 import SelectQuiz from './components/SelectQuiz.tsx'
+import TriviaGame from './components/TriviaGame.tsx'
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: '/select-quiz',
         element: <SelectQuiz />
+      },
+      {
+        path: '/trivia-game',
+        element: <TriviaGame />
       }
     ]
   }
