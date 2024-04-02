@@ -21,7 +21,14 @@ const TriviaGame = () => {
             token: sessionToken
           }
         })
-        setQuestions(response.data.results)
+        // setQuestions(response.data.results)
+        const formattedQuestions = response.data.results.map((question: Question) => ({
+          ...question,
+          question: question.question
+            .replace(/&#039;/g, "'")
+            .replace(/&quot;/g, '"')
+        }));
+        setQuestions(formattedQuestions);
       } catch (error) {
         console.error('Error fetching trivia questions:', error)
       }
@@ -31,6 +38,7 @@ const TriviaGame = () => {
   }, [formData.amount, formData.difficulty, sessionToken])
   
   interface Question {
+    type: string
     question: string
     incorrect_answers: string[]
     correct_answer: string
