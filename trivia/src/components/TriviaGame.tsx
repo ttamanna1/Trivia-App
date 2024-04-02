@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
@@ -6,6 +6,10 @@ const TriviaGame = () => {
   const location = useLocation()
   const { formData, sessionToken } = location.state
   const [questions, setQuestions] = useState<Question[]>([])
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const navigate = useNavigate()
+  const isLastQuestion = currentQuestionIndex === questions.length - 1
+  
 
   useEffect(() => {
     const fetchTriviaQuestions = async () => {
@@ -32,23 +36,37 @@ const TriviaGame = () => {
     correct_answer: string
   }
 
+const handleNextQuestion = () => {
+  setCurrentQuestionIndex(prevIndex => prevIndex + 1)
+};
+
+const handleGoHome = () => {
+  navigate("/")
+}
+
+const currentQuestion = questions[currentQuestionIndex]
+
+if (!currentQuestion) {
+  return <div>Loading...</div>
+}
+
+
   return (
-    <>
-      <div>
-        {questions.map((question, index) => (
-          <div key={index}>
-            <h2>Question {index + 1}:</h2>
-            <p>{question.question}</p>
-            <ul>
-              {question.incorrect_answers.map((option, optionIndex) => (
-                <li key={optionIndex}>{option}</li>
-              ))}
-              <li>{question.correct_answer}</li>
-            </ul>
-          </div>
+    <div>
+      <h2>Question {currentQuestionIndex + 1}:</h2>
+      <p>{currentQuestion.question}</p>
+      <ul>
+        {currentQuestion.incorrect_answers.map((option, optionIndex) => (
+          <li key={optionIndex}>{option}</li>
         ))}
-      </div>
-    </>
+        <li>{currentQuestion.correct_answer}</li>
+      </ul>
+      {isLastQuestion ? (
+        <button onClick={handleGoHome}>Home</button>
+      ) : (
+        <button onClick={handleNextQuestion}>Next Question</button>
+      )}
+    </div>
   )
 }
 
