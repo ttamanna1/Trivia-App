@@ -17,11 +17,11 @@ const TriviaGame = () => {
         const response = await axios.get(`https://opentdb.com/api.php`, {
           params: {
             amount: formData.amount,
+            category: formData.category,
             difficulty: formData.difficulty,
             token: sessionToken
           }
         })
-        // setQuestions(response.data.results)
         const formattedQuestions = response.data.results.map((question: Question) => ({
           ...question,
           question: question.question
@@ -35,7 +35,7 @@ const TriviaGame = () => {
     };
 
     fetchTriviaQuestions()
-  }, [formData.amount, formData.difficulty, sessionToken])
+  }, [formData.amount, formData.category, formData.difficulty, sessionToken])
   
   interface Question {
     type: string

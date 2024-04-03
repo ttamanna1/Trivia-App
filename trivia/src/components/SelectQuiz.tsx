@@ -1,16 +1,36 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 
 const SelectQuiz = () => {
   const navigate = useNavigate()
   const [sessionToken, setSessionToken] = useState<string>('')
+  const [categories, setCategories] = useState<Category[]>([])
 
   const [formData, setFormData] = useState({
     amount: 10,
-    // category: '', 
+    category: 'General Knowledge', 
     difficulty: 'easy'
   })
+
+  interface Category {
+    id: number
+    name: string
+  }
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('https://opentdb.com/api_category.php?amount=10')
+        const { trivia_categories } = response.data
+        setCategories(trivia_categories)
+      } catch (error) {
+        console.error('Error fetching categories:', error)
+      }
+    }
+
+    fetchCategories()
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -55,13 +75,15 @@ const SelectQuiz = () => {
               </select>
             </div>
 
-            {/* <div className="select-container">
+            <div className="select-container">
               <p>Select Category</p>
               <label hidden htmlFor="category"></label>
-              <select name="category">
-                <option value="" disabled>Select Category</option>
+              <select name="category" value={formData.category} onChange={handleChange}>
+                {categories.map((category, index) => (
+                  <option key={index} value={category.id}>{category.name}</option>
+                ))}
               </select>
-            </div> */}
+            </div>
 
             <div className="select-container">
               <p>Select Difficulty</p>
