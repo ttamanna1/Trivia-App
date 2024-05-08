@@ -27,8 +27,8 @@ const TriviaGame = () => {
           question: question.question
             .replace(/&#039;/g, "'")
             .replace(/&quot;/g, '"')
-        }));
-        setQuestions(formattedQuestions);
+        }))
+        setQuestions(formattedQuestions)
       } catch (error) {
         console.error('Error fetching trivia questions:', error)
       }
@@ -60,22 +60,26 @@ if (!currentQuestion) {
 
 
   return (
-    <div>
-      <h2>Question {currentQuestionIndex + 1}:</h2>
-      <p>{currentQuestion.question}</p>
-      <ul>
-        {currentQuestion.incorrect_answers.map((option, optionIndex) => (
-          <li key={optionIndex}>{option}</li>
-        ))}
-        <li>{currentQuestion.correct_answer}</li>
-      </ul>
-      {isLastQuestion ? (
-        <button onClick={handleGoHome}>Home</button>
-      ) : (
-        <button onClick={handleNextQuestion}>Next Question</button>
-      )}
+    <div className="quiz-wrapper">
+      <div className="quiz-container">
+        <h2>Question {currentQuestionIndex + 1}:</h2>
+        <hr/>
+        <p>{currentQuestion.question}</p>
+        <ul>
+          {currentQuestion.incorrect_answers.map((option, optionIndex) => (
+            <li key={optionIndex}>{option}</li>
+          ))}
+          <li>{currentQuestion.correct_answer}</li>
+        </ul>
+        {isLastQuestion ? (
+          <button className="btn" onClick={handleGoHome}>Home</button>
+        ) : (
+          <button className="btn" onClick={handleNextQuestion}>Next</button>
+        )}
+      </div>
     </div>
   )
 }
 
 export default TriviaGame
+
