@@ -43,20 +43,29 @@ const TriviaGame = () => {
     incorrect_answers: string[]
     correct_answer: string
   }
+  
+  const checkAnswer = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, selectedAnswer: string) => {
+    if (selectedAnswer === currentQuestion.correct_answer) {
+      e.currentTarget.classList.add("correct")
+    }
+    else {
+      e.currentTarget.classList.add("wrong")
+    }
+  }
 
-const handleNextQuestion = () => {
-  setCurrentQuestionIndex(prevIndex => prevIndex + 1)
-};
+  const handleNextQuestion = () => {
+    setCurrentQuestionIndex(prevIndex => prevIndex + 1)
+  };
 
-const handleGoHome = () => {
-  navigate("/")
-}
+  const handleGoHome = () => {
+    navigate("/")
+  }
 
-const currentQuestion = questions[currentQuestionIndex]
+  const currentQuestion = questions[currentQuestionIndex]
 
-if (!currentQuestion) {
-  return <div>Loading...</div>
-}
+  if (!currentQuestion) {
+    return <div>Loading...</div>
+  }
 
 
   return (
@@ -67,9 +76,9 @@ if (!currentQuestion) {
         <p>{currentQuestion.question}</p>
         <ul>
           {currentQuestion.incorrect_answers.map((option, optionIndex) => (
-            <li key={optionIndex}>{option}</li>
+            <li key={optionIndex} onClick={(e) => {checkAnswer(e, option)}}>{option}</li>
           ))}
-          <li>{currentQuestion.correct_answer}</li>
+          <li onClick={(e) => {checkAnswer(e, currentQuestion.correct_answer)}}>{currentQuestion.correct_answer}</li>
         </ul>
         {isLastQuestion ? (
           <button className="btn" onClick={handleGoHome}>Home</button>
@@ -82,4 +91,6 @@ if (!currentQuestion) {
 }
 
 export default TriviaGame
+
+
 
