@@ -9,6 +9,7 @@ const TriviaGame = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const navigate = useNavigate()
   const isLastQuestion = currentQuestionIndex === questions.length - 1
+  const [lock, setLock] = useState(false)
   
 
   useEffect(() => {
@@ -45,17 +46,22 @@ const TriviaGame = () => {
   }
   
   const checkAnswer = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, selectedAnswer: string) => {
-    if (selectedAnswer === currentQuestion.correct_answer) {
-      e.currentTarget.classList.add("correct")
-    }
-    else {
-      e.currentTarget.classList.add("wrong")
+    if (lock === false) {
+      if (selectedAnswer === currentQuestion.correct_answer) {
+        e.currentTarget.classList.add("correct")
+        setLock(true)
+      }
+      else {
+        e.currentTarget.classList.add("wrong")
+        setLock(true)
+      }
     }
   }
 
+
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(prevIndex => prevIndex + 1)
-  };
+  }
 
   const handleGoHome = () => {
     navigate("/")
