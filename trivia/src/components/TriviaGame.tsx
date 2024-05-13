@@ -44,6 +44,7 @@ const TriviaGame = () => {
     incorrect_answers: string[]
     correct_answer: string
   }
+
   
   const checkAnswer = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, selectedAnswer: string) => {
     if (lock === false) {
@@ -73,6 +74,7 @@ const TriviaGame = () => {
     return <div>Loading...</div>
   }
 
+  const questionsArray = currentQuestion.incorrect_answers.concat([currentQuestion.correct_answer])
 
   return (
     <div className="quiz-wrapper">
@@ -81,10 +83,9 @@ const TriviaGame = () => {
         <hr/>
         <p>{currentQuestion.question}</p>
         <ul>
-          {currentQuestion.incorrect_answers.map((option, optionIndex) => (
+          {questionsArray.map((option, optionIndex) => (
             <li key={optionIndex} onClick={(e) => {checkAnswer(e, option)}}>{option}</li>
           ))}
-          <li onClick={(e) => {checkAnswer(e, currentQuestion.correct_answer)}}>{currentQuestion.correct_answer}</li>
         </ul>
         {isLastQuestion ? (
           <button className="btn" onClick={handleGoHome}>Home</button>
