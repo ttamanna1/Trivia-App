@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 
 const TriviaGame = () => {
@@ -10,6 +10,8 @@ const TriviaGame = () => {
   const navigate = useNavigate()
   const isLastQuestion = currentQuestionIndex === questions.length - 1
   const [lock, setLock] = useState(false)
+  const correctAnswerRef = useRef<HTMLLIElement>(null)
+  
 
   useEffect(() => {
     const fetchTriviaQuestions = async () => {
@@ -32,7 +34,7 @@ const TriviaGame = () => {
       } catch (error) {
         console.error('Error fetching trivia questions:', error)
       }
-    };
+    }
 
     fetchTriviaQuestions()
   }, [formData.amount, formData.category, formData.difficulty, sessionToken])
@@ -43,35 +45,12 @@ const TriviaGame = () => {
     incorrect_answers: string[]
     correct_answer: string
   }
-  
-  const checkAnswer = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, selectedAnswer: string) => {
-    if (lock === false) {
-      if (selectedAnswer === currentQuestion.correct_answer) {
-        e.currentTarget.classList.add("correct")
-        setLock(true)
-      }
-      else {
-        e.currentTarget.classList.add("wrong")
-        setLock(true)
-      }
-    }
-  }
-
-  const handleNextQuestion = () => {
-    setCurrentQuestionIndex(prevIndex => prevIndex + 1)
-  }
-
-  const handleGoHome = () => {
-    navigate("/")
-  }
 
   const currentQuestion = questions[currentQuestionIndex]
 
   if (!currentQuestion) {
     return <div>Loading...</div>
   }
-
-  const questionsArray = currentQuestion.incorrect_answers.concat([currentQuestion.correct_answer])
 
   // Fisher-Yates sorting algorithm to shuffle incorrect answers and correct answer
   const shuffle = (array: string[]) => { 
@@ -82,7 +61,39 @@ const TriviaGame = () => {
     return array
   }
 
-  const shuffledQuestions = shuffle(questionsArray)
+  // Shuffle the questions array
+  const shuffledAnswers = shuffle([
+    ...currentQuestion.incorrect_answers,
+    currentQuestion.correct_answer,
+  ])
+
+  const checkAnswer = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, selectedAnswer: string) => {
+      if (lock === false) {
+        if (selectedAnswer === currentQuestion.correct_answer) {
+          e.currentTarget.classList.add("correct")
+          setLock(true)
+          
+        }
+        else {
+          e.currentTarget.classList.add("wrong")
+          if (correctAnswerRef.current) {
+            correctAnswerRef.current.classList.add("correct")
+          }
+          setLock(true)
+        }
+      }
+  }
+
+  const handleNextQuestion = () => {
+    if (lock === true) {
+      setCurrentQuestionIndex(prevIndex => prevIndex + 1)
+      setLock(false)
+    }
+  }
+
+  const handleGoHome = () => {
+    navigate("/")
+  }
 
   return (
     <div className="quiz-wrapper">
@@ -91,8 +102,14 @@ const TriviaGame = () => {
         <hr/>
         <p>{currentQuestion.question}</p>
         <ul>
-          {shuffledQuestions.map((option, optionIndex) => (
-            <li key={optionIndex} onClick={(e) => {checkAnswer(e, option)}}>{option}</li>
+          {shuffledAnswers.map((option, optionIndex) => (
+            <li 
+            key={optionIndex} 
+            onClick={(e) => {checkAnswer(e, option)}}
+            ref={option === currentQuestion.correct_answer ? correctAnswerRef : null}
+            >
+              {option}
+            </li>
           ))}
         </ul>
         {isLastQuestion ? (
