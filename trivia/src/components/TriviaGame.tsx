@@ -11,7 +11,7 @@ const TriviaGame = () => {
   const isLastQuestion = currentQuestionIndex === questions.length - 1
   const [lock, setLock] = useState(false)
   const correctAnswerRef = useRef<HTMLLIElement>(null)
-  
+
 
   useEffect(() => {
     const fetchTriviaQuestions = async () => {
@@ -72,7 +72,7 @@ const TriviaGame = () => {
         if (selectedAnswer === currentQuestion.correct_answer) {
           e.currentTarget.classList.add("correct")
           setLock(true)
-          
+
         }
         else {
           e.currentTarget.classList.add("wrong")
@@ -88,6 +88,13 @@ const TriviaGame = () => {
     if (lock === true) {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1)
       setLock(false)
+      const options = document.querySelectorAll("li")
+      options.forEach(option => {
+        option.classList.remove("wrong")
+      })
+      if (correctAnswerRef.current) {
+        correctAnswerRef.current.classList.remove("correct")
+      }
     }
   }
 
