@@ -11,7 +11,8 @@ const TriviaGame = () => {
   const isLastQuestion = currentQuestionIndex === questions.length - 1
   const [lock, setLock] = useState(false)
   const correctAnswerRef = useRef<HTMLLIElement>(null)
-
+  const [score, setScore] = useState(0)
+  const [result, setResult] = useState(false)
 
   useEffect(() => {
     const fetchTriviaQuestions = async () => {
@@ -72,7 +73,7 @@ const TriviaGame = () => {
         if (selectedAnswer === currentQuestion.correct_answer) {
           e.currentTarget.classList.add("correct")
           setLock(true)
-
+          setScore(prevScore => prevScore + 1)
         }
         else {
           e.currentTarget.classList.add("wrong")
@@ -86,25 +87,30 @@ const TriviaGame = () => {
 
   const handleNextQuestion = () => {
     if (lock === true) {
+      if (isLastQuestion) {
+        setResult(true)
+        return 0
+      }
       setCurrentQuestionIndex(prevIndex => prevIndex + 1)
       setLock(false)
       const options = document.querySelectorAll("li")
       options.forEach(option => {
         option.classList.remove("wrong")
+        option.classList.remove("correct")
       })
-      if (correctAnswerRef.current) {
-        correctAnswerRef.current.classList.remove("correct")
-      }
     }
   }
 
   const handleGoHome = () => {
-    navigate("/")
+    if (lock === true) {
+      navigate("/")
+    }
   }
 
   return (
     <div className="quiz-wrapper">
       <div className="quiz-container">
+        {result ? <></> : <>
         <h2>Question {currentQuestionIndex + 1}:</h2>
         <hr/>
         <p>{currentQuestion.question}</p>
@@ -119,11 +125,16 @@ const TriviaGame = () => {
             </li>
           ))}
         </ul>
-        {isLastQuestion ? (
-          <button className="btn" onClick={handleGoHome}>Home</button>
-        ) : (
+
           <button className="btn" onClick={handleNextQuestion}>Next</button>
-        )}
+
+        </>}  
+        {result ? <>
+          <h2>Score: {score} out of {questions.length}</h2>
+          <button className="btn" onClick={handleGoHome}>Home</button>
+        </>
+        :
+        <></>}
       </div>
     </div>
   )
