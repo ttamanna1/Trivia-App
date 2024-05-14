@@ -10,7 +10,6 @@ const TriviaGame = () => {
   const navigate = useNavigate()
   const isLastQuestion = currentQuestionIndex === questions.length - 1
   const [lock, setLock] = useState(false)
-  
 
   useEffect(() => {
     const fetchTriviaQuestions = async () => {
@@ -44,7 +43,6 @@ const TriviaGame = () => {
     incorrect_answers: string[]
     correct_answer: string
   }
-
   
   const checkAnswer = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, selectedAnswer: string) => {
     if (lock === false) {
@@ -58,7 +56,6 @@ const TriviaGame = () => {
       }
     }
   }
-
 
   const handleNextQuestion = () => {
     setCurrentQuestionIndex(prevIndex => prevIndex + 1)
@@ -76,6 +73,17 @@ const TriviaGame = () => {
 
   const questionsArray = currentQuestion.incorrect_answers.concat([currentQuestion.correct_answer])
 
+  // Fisher-Yates sorting algorithm to shuffle incorrect answers and correct answer
+  const shuffle = (array: string[]) => { 
+    for (let i = array.length - 1; i > 0; i--) { 
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]]
+    } 
+    return array
+  }
+
+  const shuffledQuestions = shuffle(questionsArray)
+
   return (
     <div className="quiz-wrapper">
       <div className="quiz-container">
@@ -83,7 +91,7 @@ const TriviaGame = () => {
         <hr/>
         <p>{currentQuestion.question}</p>
         <ul>
-          {questionsArray.map((option, optionIndex) => (
+          {shuffledQuestions.map((option, optionIndex) => (
             <li key={optionIndex} onClick={(e) => {checkAnswer(e, option)}}>{option}</li>
           ))}
         </ul>
