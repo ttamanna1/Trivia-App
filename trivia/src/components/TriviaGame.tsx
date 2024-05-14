@@ -13,6 +13,7 @@ const TriviaGame = () => {
   const correctAnswerRef = useRef<HTMLLIElement>(null)
   const [score, setScore] = useState(0)
   const [result, setResult] = useState(false)
+  const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
 
   useEffect(() => {
     const fetchTriviaQuestions = async () => {
@@ -49,24 +50,30 @@ const TriviaGame = () => {
 
   const currentQuestion = questions[currentQuestionIndex]
 
+  useEffect(() => {
+    if (currentQuestion) {
+      // Fisher-Yates sorting algorithm to shuffle incorrect answers and correct answer
+      const shuffleAnswers = (array: string[]) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]]
+        }
+        return array
+      }
+  
+      // Shuffle the questions array
+      const shuffledAnswers = shuffleAnswers([
+        ...currentQuestion.incorrect_answers,
+        currentQuestion.correct_answer,
+      ])
+      
+      setShuffledAnswers(shuffledAnswers)
+    }
+  }, [currentQuestion])
+
   if (!currentQuestion) {
     return <div>Loading...</div>
   }
-
-  // Fisher-Yates sorting algorithm to shuffle incorrect answers and correct answer
-  const shuffle = (array: string[]) => { 
-    for (let i = array.length - 1; i > 0; i--) { 
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]]
-    } 
-    return array
-  }
-
-  // Shuffle the questions array
-  const shuffledAnswers = shuffle([
-    ...currentQuestion.incorrect_answers,
-    currentQuestion.correct_answer,
-  ])
 
   const checkAnswer = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, selectedAnswer: string) => {
       if (lock === false) {
