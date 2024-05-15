@@ -132,9 +132,8 @@ const TriviaGame = () => {
             </li>
           ))}
         </ul>
-
           <button className="btn" onClick={handleNextQuestion}>Next</button>
-
+          <div className="index">{currentQuestionIndex + 1} of {questions.length} questions</div>
         </>}  
         {result ? <>
           <h2>Score: {score} out of {questions.length}</h2>
