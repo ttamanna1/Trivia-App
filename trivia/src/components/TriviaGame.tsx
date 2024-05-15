@@ -30,7 +30,15 @@ const TriviaGame = () => {
           ...question,
           question: question.question
             .replace(/&#039;/g, "'")
-            .replace(/&quot;/g, '"')
+            .replace(/&amp;/g, "&")
+            .replace(/&quot;/g, '"'), 
+          correct_answer: question.correct_answer
+            .replace(/&#039;/g, "'")
+            .replace(/&amp;/g, "&")
+            .replace(/&quot;/g, '"'),
+          incorrect_answers: question.incorrect_answers.map(answer => 
+            answer.replace(/&#039;/g, "'").replace(/&amp;/g, "&").replace(/&quot;/g, '"')
+          )
         }))
         setQuestions(formattedQuestions)
       } catch (error) {
