@@ -1,8 +1,66 @@
+@keyframes transition {
+  20% {
+    background-color: purple;
+  }
+  40% {
+    background-color: violet;
+  }
+  60% {
+    background-color: skyblue;
+  }
+  80% {
+    background-color: cyan;
+  }
+  100% {
+    background-color: magenta;
+  }
+}
+
+
 .quiz-wrapper{
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+
+  background: white;
+  background-image: 
+    radial-gradient(
+      purple 10%, black 20%, skyblue 40%, red 60%,
+      violet 80%, magenta 100%,
+    ),
+    linear-gradient(65deg,
+      rgba(245, 66, 239,.1) 10%,
+      rgba(78, 239, 245,.0) 20%,
+      rgba(245, 66, 239,.1) 30%),
+    linear-gradient(-65deg,
+      rgba(245, 66, 239,.1) 10%,
+      rgba(78, 239, 245,.0) 20%,
+      rgba(245, 66, 239,.1) 30%),
+    radial-gradient(
+      purple 10%, black 20%, skyblue 40%, red 60%,
+      violet 80%, magenta 100%,
+    ),
+    
+    radial-gradient(
+      purple 10%, black 20%, skyblue 40%, red 60%,
+      violet 80%, magenta 100%,
+    );
+  
+  background-blend-mode: 
+    lighten, 
+    normal, 
+    normal,
+    overlay;
+  background-size: 
+    10em 10em,
+    8em 8em,
+    6em 6em,
+    4em 4em,
+    2em 2em;
+  animation: transition 15s linear infinite;
+  background-position: 
+    50% 50%;
 
   .quiz-container{
     width: 640px;
@@ -70,4 +128,5 @@
     }
   }
 }
+
 
