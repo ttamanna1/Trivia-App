@@ -14,6 +14,7 @@ const TriviaGame = () => {
   const [score, setScore] = useState(0)
   const [result, setResult] = useState(false)
   const [shuffledAnswers, setShuffledAnswers] = useState<string[]>([])
+  const backgroundClasses = ["bg1", "bg2", "bg3", "bg4", "bg5", "bg6"]
 
   useEffect(() => {
     const fetchTriviaQuestions = async () => {
@@ -122,8 +123,12 @@ const TriviaGame = () => {
     }
   }
 
+  const changeBackground = () => {
+    return backgroundClasses[currentQuestionIndex % backgroundClasses.length]
+  }
+
   return (
-    <div className="quiz-wrapper">
+    <div className={`quiz-wrapper ${changeBackground()}`}>
       <div className="quiz-container">
         {result ? <></> : <>
         <h2>Question {currentQuestionIndex + 1}:</h2>
