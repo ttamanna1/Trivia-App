@@ -10,11 +10,13 @@ import App from './App.tsx'
 import Home from './components/Home.tsx'
 import SelectQuiz from './components/SelectQuiz.tsx'
 import TriviaGame from './components/TriviaGame.tsx'
+import ErrorPage from './components/ErrorPage.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
